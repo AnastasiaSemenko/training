@@ -58,6 +58,7 @@ public class Bouquet {
     @Override
     public String toString() {
         String str = "Ваш букет: \n";
+        str += myPack.toString();
         for (int i = 0; i < myPack.getVolume(); i++) {
             str += ("Цветок " + (i + 1) + ": " + myFlowers[i].toString() + "\n");
         }
