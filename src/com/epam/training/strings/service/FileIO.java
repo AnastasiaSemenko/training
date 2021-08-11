@@ -1,4 +1,6 @@
-package com.epam.training.strings;
+package com.epam.training.strings.service;
+
+import com.epam.training.strings.domain.Text;
 
 import java.io.IOException;
 import java.nio.file.Files;

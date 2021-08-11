@@ -1,11 +1,10 @@
-package com.epam.training.strings;
+package com.epam.training.strings.domain;
 
 public abstract class TextComponent {
     protected final String text;
 
     protected TextComponent(String text) {
         this.text = text;
-        this.contentParsing();
     }
 
     public String getText() {

@@ -1,23 +1,28 @@
-package com.epam.training.strings;
+package com.epam.training.strings.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Text extends TextComponent {
-    public static StringBuilder parser = new StringBuilder();
+    public StringBuilder parser = new StringBuilder();
     private static final String REGEX_PUNCTUATION = "(\\p{Punct}\\s)";
     private static final String REGEX_WORD = "([\\w-]+)";
-    private static final String REGEX_EMAIL = "([\\w\\.-]+@[a-z]+\\.[a-z]{2,})";
+    private static final String REGEX_EMAIL = "([\\w.-]+@[a-z]+\\.[a-z]{2,})";
     private static final String REGEX_PHONE = "(\\+\\d{3}\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2})";
     private static final String REGEX_SENTENCE = "([^.!?]+(([.]\\S[^.!?]+)*[.!?][\\s]))";
+    private final List<String> arrayOfWords = new ArrayList<>();
+    private final List<String> arrayOfSentences = new ArrayList<>();
 
     public Text(String text) {
         super(text.replaceAll("\\s+", " "));
+        contentParsing();
     }
 
     @Override
     protected void contentParsing() {
-        Text.parser.append("Текст: ").append(text).append("\nСостоит из: \n");
+        parser.append("Текст: ").append(text).append("\nСостоит из: \n");
         Matcher matcher = Pattern.compile(REGEX_SENTENCE).matcher(text);
         while (matcher.find()) {
             Sentence sentence = new Sentence(matcher.group());
@@ -48,14 +53,24 @@ public class Text extends TextComponent {
         return REGEX_SENTENCE;
     }
 
-    private static class Sentence extends TextComponent {
+    public List<String> getArrayOfWords() {
+        return arrayOfWords;
+    }
+
+    public List<String> getArrayOfSentences() {
+        return arrayOfSentences;
+    }
+
+    private class Sentence extends TextComponent {
         protected Sentence(String text) {
             super(text);
+            contentParsing();
+            arrayOfSentences.add(text);
         }
 
         @Override
         protected void contentParsing() {
-            Text.parser.append("Предложение - ").append(text).append("\nСостоит из следующих элементов:\n");
+            parser.append("Предложение - ").append(text).append("\nСостоит из следующих элементов:\n");
             Matcher matcher = Pattern.compile(REGEX_EMAIL + "|" + REGEX_PHONE + "|" + REGEX_WORD + "|" + REGEX_PUNCTUATION).matcher(text);
             while (matcher.find()) {
                 if (matcher.group().matches(REGEX_PUNCTUATION)) {
@@ -66,29 +81,29 @@ public class Text extends TextComponent {
             }
         }
 
-        private static class Word extends TextComponent{
+        private class Word extends TextComponent {
             protected Word(String text) {
                 super(text);
+                contentParsing();
+                arrayOfWords.add(text);
             }
 
             @Override
             protected void contentParsing() {
-                Text.parser.append(text).append(" - слово\n");
+                parser.append(text).append(" - слово\n");
             }
         }
 
-        private static class Punctuation extends TextComponent{
+        private class Punctuation extends TextComponent {
             protected Punctuation(String text) {
                 super(text);
+                contentParsing();
             }
 
             @Override
             protected void contentParsing() {
-                Text.parser.append(text).append(" - знак препинания\n");
+                parser.append(text).append(" - знак препинания\n");
             }
         }
     }
 }
-
-
-
