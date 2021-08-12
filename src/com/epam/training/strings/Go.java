@@ -6,7 +6,8 @@ import com.epam.training.strings.service.Searcher;
 
 public class Go {
     public static void main(String[] args) {
-        Text text = FileIO.fileRead("Data/test.txt");
+        String content = FileIO.fileRead("Data/test.txt");
+        Text text = new Text(content);
         System.out.println(text.getParser());
         System.out.println(Searcher.searchTheOftenMetWord(text));
     }
