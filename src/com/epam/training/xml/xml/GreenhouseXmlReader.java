@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GreenhouseXmlReader {
-    public List<Plant> read(String xmlFileName) {
+    public static List<Plant> read(String xmlFileName) {
         List<Plant> plants = new ArrayList<>();
         XMLStreamReader reader = null;
         try {

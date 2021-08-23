@@ -7,8 +7,8 @@
         <soil>дерново-подзолистая</soil>
         <origin>Южная Америка</origin>
         <visual-parameters>
-            <stem-color>хз</stem-color>
-            <leaves-color>хз</leaves-color>
+            <stem-color>зеленый</stem-color>
+            <leaves-color>темно-зеленый</leaves-color>
             <average-size>80</average-size>
         </visual-parameters>
         <growing-tips>
@@ -23,8 +23,8 @@
         <soil>грунтовая</soil>
         <origin>Южная Америка</origin>
         <visual-parameters>
-            <stem-color>хз</stem-color>
-            <leaves-color>хз</leaves-color>
+            <stem-color>бордовый</stem-color>
+            <leaves-color>зеленый</leaves-color>
             <average-size>35</average-size>
         </visual-parameters>
         <growing-tips>
@@ -39,8 +39,8 @@
         <soil>грунтовая</soil>
         <origin>Южная Европа</origin>
         <visual-parameters>
-            <stem-color>хз</stem-color>
-            <leaves-color>хз</leaves-color>
+            <stem-color>коричневый</stem-color>
+            <leaves-color>бордовый</leaves-color>
             <average-size>30</average-size>
         </visual-parameters>
         <growing-tips>

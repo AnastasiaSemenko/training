@@ -11,14 +11,12 @@ import java.util.Comparator;
 public class Go {
     public static void main(String[] args) {
         GreenhouseXmlValidator validator = new GreenhouseXmlValidator();
-        if (validator.validate("greenhouse.xsd", "greenhouse.xml")) {
-            GreenhouseXmlReader reader = new GreenhouseXmlReader();
+        if (validator.validate("src/resources/greenhouse.xsd", "src/resources/greenhouse.xml")) {
             Greenhouse greenhouse = new Greenhouse();
-            greenhouse.setPlantList(reader.read("greenhouse.xml"));
+            greenhouse.setPlantList(GreenhouseXmlReader.read("src/resources/greenhouse.xml"));
             greenhouse.getPlantList().sort(Comparator.comparing(Plant::getName));
             System.out.println(greenhouse.toString());
-            GreenhouseXmlWriter writer = new GreenhouseXmlWriter();
-            writer.write(greenhouse.getPlantList(), "newGreenhouse.xml");
+            GreenhouseXmlWriter.write(greenhouse.getPlantList(), "src/resources/newGreenhouse.xml");
             System.out.println("Запись данных прошла успешно!!)");
         } else {
             System.out.println(validator.getError());

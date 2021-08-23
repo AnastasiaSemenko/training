@@ -10,55 +10,43 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 public class GreenhouseXmlWriter {
-    public void write(List<Plant> plants, String newXmlFileName) {
+    public static void write(List<Plant> plants, String fileName) {
         XMLStreamWriter writer = null;
+        XMLOutputFactory factory = XMLOutputFactory.newFactory();
         try {
-            XMLOutputFactory factory = XMLOutputFactory.newFactory();
-            writer = factory.createXMLStreamWriter(new FileOutputStream(newXmlFileName), "UTF-8");
+            writer = factory.createXMLStreamWriter(new FileOutputStream(fileName), "UTF-8");
             writer.writeStartDocument("UTF-8", "1.0");
+            writer.writeCharacters("\n");
             writer.writeStartElement("greenhouse");
             writer.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             writer.writeAttribute("xmlns", "http://www.training.by/greenhouse");
             writer.writeAttribute("xsi:schemaLocation", "http://www.training.by/greenhouse greenhouse.xsd");
+            writer.writeCharacters("\n");
             for (Plant plant : plants) {
                 writer.writeStartElement("plant");
                 writer.writeAttribute("id", plant.getId());
-                writer.writeStartElement("name");
-                writer.writeCharacters(plant.getName());
-                writer.writeEndElement();
-                writer.writeStartElement("soil");
-                writer.writeCharacters(plant.getSoil().getSoilType());
-                writer.writeEndElement();
-                writer.writeStartElement("origin");
-                writer.writeCharacters(plant.getOrigin());
-                writer.writeEndElement();
+                writer.writeCharacters("\n");
+                createElement(writer, "name", plant.getName());
+                createElement(writer, "soil", plant.getSoil().getSoilType());
+                createElement(writer, "origin", plant.getOrigin());
                 writer.writeStartElement("visual-parameters");
-                writer.writeStartElement("stem-color");
-                writer.writeCharacters(plant.getVisualParameters().getStemColor());
+                writer.writeCharacters("\n");
+                createElement(writer, "stem-color", plant.getVisualParameters().getStemColor());
+                createElement(writer, "leaves-color", plant.getVisualParameters().getLeavesColor());
+                createElement(writer, "average-size", String.valueOf(plant.getVisualParameters().getAverageSize()));
                 writer.writeEndElement();
-                writer.writeStartElement("leaves-color");
-                writer.writeCharacters(plant.getVisualParameters().getLeavesColor());
-                writer.writeEndElement();
-                writer.writeStartElement("average-size");
-                writer.writeCharacters(String.valueOf(plant.getVisualParameters().getAverageSize()));
-                writer.writeEndElement();
-                writer.writeEndElement();
+                writer.writeCharacters("\n");
                 writer.writeStartElement("growing-tips");
-                writer.writeStartElement("temperature");
-                writer.writeCharacters(String.valueOf(plant.getGrowingTips().getTemperature()));
+                writer.writeCharacters("\n");
+                createElement(writer, "temperature", String.valueOf(plant.getGrowingTips().getTemperature()));
+                createElement(writer, "lighting", String.valueOf(plant.getGrowingTips().isLighting()));
+                createElement(writer, "watering", String.valueOf(plant.getGrowingTips().getWatering()));
                 writer.writeEndElement();
-                writer.writeStartElement("lighting");
-                writer.writeCharacters(String.valueOf(plant.getGrowingTips().isLighting()));
-                writer.writeEndElement();
-                writer.writeStartElement("watering");
-                writer.writeCharacters(String.valueOf(plant.getGrowingTips().getWatering()));
-                writer.writeEndElement();
-                writer.writeEndElement();
-                writer.writeStartElement("multiplying");
-                writer.writeCharacters(plant.getMultiplying().getMultiplyingType());
-                writer.writeEndElement();
+                writer.writeCharacters("\n");
+                createElement(writer, "multiplying", plant.getMultiplying().getMultiplyingType());
                 writer.writeEndElement();
             }
+            writer.writeCharacters("\n");
             writer.writeEndElement();
             writer.writeEndDocument();
         } catch (FileNotFoundException e) {
@@ -71,6 +59,17 @@ public class GreenhouseXmlWriter {
             } catch (XMLStreamException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private static void createElement(XMLStreamWriter writer, String name, String value) {
+        try {
+            writer.writeStartElement(name);
+            writer.writeCharacters(value);
+            writer.writeEndElement();
+            writer.writeCharacters("\n");
+        } catch (XMLStreamException e) {
+            System.err.println("Ошибка при считывании файла");
         }
     }
 }
