@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.training.by/greenhouse"
+        elementFormDefault="qualified">
+    <element name="greenhouse">
+        <complexType>
+            <sequence>
+                <element name="plant" maxOccurs="unbounded">
+                    <complexType>
+                        <sequence>
+                            <element name="name" type="string"/>
+                            <element name="soil">
+                                <simpleType>
+                                    <restriction base="string">
+                                        <enumeration value="подзолистая"/>
+                                        <enumeration value="грунтовая"/>
+                                        <enumeration value="дерново-подзолистая"/>
+                                    </restriction>
+                                </simpleType>
+                            </element>
+                            <element name="origin" type="string"/>
+                            <element name="visual-parameters">
+                                <complexType>
+                                    <sequence>
+                                        <element name="stem-color" type="string"/>
+                                        <element name="leaves-color" type="string"/>
+                                        <element name="average-size" type="positiveInteger"/>
+                                    </sequence>
+                                </complexType>
+                            </element>
+                            <element name="growing-tips">
+                                <complexType>
+                                    <sequence>
+                                        <element name="temperature" type="positiveInteger"/>
+                                        <element name="lighting" type="boolean"/>
+                                        <element name="watering" type="positiveInteger"/>
+                                    </sequence>
+                                </complexType>
+                            </element>
+                            <element name="multiplying">
+                                <simpleType>
+                                    <restriction base="string">
+                                        <enumeration value="листьями"/>
+                                        <enumeration value="черенками"/>
+                                        <enumeration value="семенами"/>
+                                    </restriction>
+                                </simpleType>
+                            </element>
+                        </sequence>
+                        <attribute name="id" use="required">
+                            <simpleType>
+                                <restriction base="ID">
+                                    <pattern value="p[0-9]+"/>
+                                </restriction>
+                            </simpleType>
+                        </attribute>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+</schema>
